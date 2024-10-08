@@ -22,7 +22,7 @@ label {
     margin: 10px 0 5px;
 }
 
-input {
+input,select {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -31,14 +31,20 @@ input {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #007bff; /* Blue color for enabled state */
     border: none;
     color: #fff;
     cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
 }
 
-button:hover {
-    background-color: #0056b3;
+button:disabled {
+    background-color: #cccccc; /* Gray color for disabled state */
+    cursor: not-allowed; /* Change cursor style */
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover for enabled state */
 }
 
 #message {

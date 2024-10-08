@@ -2,12 +2,16 @@ function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('/api/auth', {
+    fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Application-Key': 'TU2ecedd420922b9c533378fbfd1a1135f335e072a347689002caa1a73ac6c0c4a98954a78a147ea2b7ae10bdefe2fb198'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ 
+            "UserName": username, 
+            "PassWord": password 
+        })
     })
     .then(response => response.json())
     .then(data => {
@@ -16,7 +20,26 @@ function submitLogin() {
     .catch(error => console.error('Error:', error));
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const roleSelect = document.getElementById('role');
+    const loginButton = document.querySelector('button[type="button"]:nth-of-type(1)');
 
+    function checkInputs() {
+        const isUsernameFilled = usernameInput.value.trim() !== '';
+        const isPasswordFilled = passwordInput.value.trim() !== '';
+        const isRoleSelected = roleSelect.value !== '';
+
+        loginButton.disabled = !(isUsernameFilled && isPasswordFilled && isRoleSelected);
+    }
+
+    usernameInput.addEventListener('input', checkInputs);
+    passwordInput.addEventListener('input', checkInputs);
+    roleSelect.addEventListener('change', checkInputs);
+
+    checkInputs();
+});
 
 function call_REST_API_Hello() {
     const username = document.getElementById('username').value;
