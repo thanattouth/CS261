@@ -2,6 +2,11 @@ function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    if (!validateInputs(username, password)) {
+        return;
+    }
+    document.getElementById('message').innerText = '';
+
     fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
         method: 'POST',
         headers: {
@@ -18,6 +23,25 @@ function submitLogin() {
         document.getElementById('message').innerText = data.message;
     })
     .catch(error => console.error('Error:', error));
+}
+
+function validateInputs(username, password) {
+    const usernameRegex = /^[0-9]{10}$/;
+    const passwordRegex = /^[0-9]{13}$/;
+
+    document.getElementById('messageError').innerText = '';
+
+    if (!usernameRegex.test(username)) {
+        document.getElementById('messageError').innerText = 'Username must be 10 numeric characters.';
+        return false;
+    }
+
+    if (!passwordRegex.test(password)) {
+        document.getElementById('messageError').innerText = 'Password must be 13 numeric characters.';
+        return false;
+    }
+
+    return true;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -52,21 +76,4 @@ function togglePassword() {
         passwordInput.type = 'password';
         toggleText.innerText = 'Show Password';
     }
-}
-
-function call_REST_API_Hello() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const url = (
-        'http://localhost:8080/hello?' +
-        new URLSearchParams({ myName: username, lastName: password}).toString()
-      );
-    
-    fetch(url)
-    .then(response => response.text())
-    .then(text => {
-        document.getElementById('message').innerText = text;
-    })
-    .catch(error => console.error('Error:', error));
 }
