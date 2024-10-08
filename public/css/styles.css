@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Use a more macOS-like font */
+    background-color: #e7e7e9; /* Light gray background for a softer look */
     margin: 0;
     padding: 0;
 }
@@ -9,28 +9,62 @@ body {
     max-width: 400px;
     width: 90%;
     margin: 100px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Increased padding for a spacious feel */
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 20px; /* More rounded corners */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+    border: 1px solid #dcdcdc; /* Light border for subtle definition */
+    position: relative; /* Needed for absolute positioning of buttons */
+}
+
+/* MacBook-style buttons */
+.mac-buttons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px; /* Space between buttons */
+}
+
+.button {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; /* Make the buttons circular */
+    cursor: pointer; /* Change cursor to pointer */
+    border: 1px solid transparent; /* Default border */
+}
+
+.close {
+    background-color: #ff605c; /* Red for close */
+}
+
+.minimize {
+    background-color: #ffbd44; /* Yellow for minimize */
+}
+
+.maximize {
+    background-color: #00ca56; /* Green for maximize */
 }
 
 h1 {
     text-align: center;
+    font-size: 28px; /* Increased font size */
+    color: #333; /* Darker text for better readability */
     margin-bottom: 20px;
 }
 
 label {
     display: block;
     margin: 10px 0 5px;
+    color: #555; /* Subtle gray for labels */
 }
 
 select {
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 10px; /* More rounded select */
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     font-size: 16px;
@@ -41,63 +75,65 @@ input {
     width: calc(100% - 23px);
     padding: 10px;
     margin-bottom: 10px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 10px; /* More rounded input fields */
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 input:focus, select:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #0056b3; /* Darker blue on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft glow effect */
 }
 
 .toggle-password {
     cursor: pointer;
-    color: #007bff;
+    color: #007bff; /* Blue text for the toggle */
     font-size: 14px;
     margin-top: -5px;
 }
 
 .toggle-password:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 15px;
+    background-color: #007bff; /* Button color */
     border: none;
-    border-radius: 5px;
+    border-radius: 10px; /* More rounded button */
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: medium; /* Medium font size */
 }
 
 button:disabled {
-    background-color: #cccccc;
+    background-color: #cccccc; /* Disabled button color */
     cursor: not-allowed;
 }
 
 button:hover:not(:disabled) {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 #messageError {
-    color: red;
+    color: red; /* Error messages in red */
     margin-top: 20px;
     text-align: center;
 }
 
 #message {
-    color: green;
+    color: green; /* Success messages in green */
     margin-top: 20px;
     text-align: center;
 }
 
+/* Media Queries for Responsiveness */
 @media (max-width: 500px) {
     .login-container {
-        margin: 20px;
-        padding: 15px;
+        margin: 20px; /* Reduce margin for smaller screens */
+        padding: 15px; /* Slightly smaller padding */
     }
 }
