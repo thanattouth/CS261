@@ -2,11 +2,13 @@ function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    // First, validate inputs
     if (!validateInputs(username, password)) {
-        return;
+        document.getElementById('message').innerText = ''; // Clear success message if validation fails
+        return; // Stop the function if validation fails
     }
-    document.getElementById('message').innerText = '';
 
+    // Proceed to make the API call if inputs are valid
     fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
         method: 'POST',
         headers: {
@@ -22,26 +24,34 @@ function submitLogin() {
     .then(data => {
         document.getElementById('message').innerText = data.message;
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'An error occurred while processing your request.';
+    });
 }
+
 
 function validateInputs(username, password) {
     const usernameRegex = /^[0-9]{10}$/;
     const passwordRegex = /^[0-9]{13}$/;
 
-    document.getElementById('messageError').innerText = '';
+    // Clear previous error messages
+    document.getElementById('messageErrorU').innerText = '';
+    document.getElementById('messageErrorP').innerText = '';
+
+    let isValid = true;
 
     if (!usernameRegex.test(username)) {
-        document.getElementById('messageError').innerText = 'Username must be 10 numeric characters.';
-        return false;
+        document.getElementById('messageErrorU').innerText = 'Username must be 10 numeric characters.';
+        isValid = false; // Set valid flag to false
     }
 
     if (!passwordRegex.test(password)) {
-        document.getElementById('messageError').innerText = 'Password must be 13 numeric characters.';
-        return false;
+        document.getElementById('messageErrorP').innerText = 'Password must be 13 numeric characters.';
+        isValid = false; // Set valid flag to false
     }
 
-    return true;
+    return isValid; // Return the final validation result
 }
 
 document.addEventListener('DOMContentLoaded', function() {

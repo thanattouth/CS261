@@ -118,12 +118,6 @@ button:hover:not(:disabled) {
     background-color: #0056b3; /* Darker blue on hover */
 }
 
-#messageError {
-    color: red; /* Error messages in red */
-    margin-top: 20px;
-    text-align: center;
-}
-
 #message {
     color: green; /* Success messages in green */
     margin-top: 20px;

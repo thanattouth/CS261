@@ -15,24 +15,28 @@
         </div>
         <h1>LOGIN</h1>
         <form id="loginForm">
-            <label for="username">username</label>
+            <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
-            <label for="password">password</label>
+            <p id="messageErrorU" style="color: red;"></p> <!-- Error message for username -->
+            
+            <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
+            <p id="messageErrorP" style="color: red;"></p> <!-- Error message for password -->
+            
             <div style="position: relative;">
                 <span class="toggle-password" id="togglePassword" onclick="togglePassword()">Show Password</span>
             </div>
-            <label for="role">role</label>
+            
+            <label for="role">Role</label>
             <select name="role" id="role" required>
                 <option value="" disabled selected>Select your role</option>
                 <option value="student">Student</option>
                 <option value="Lecturer">Lecturer</option>
             </select>
+            
             <button type="button" onclick="submitLogin()" id="loginButton" disabled>Login</button>
-            <!-- <button type="button" onclick="call_REST_API_Hello()">Hello</button> -->
+            <p id="message"></p> 
         </form>
-        <p id="message"></p> 
-        <p id="messageError"></p>
     </div>
     <script src="js/script.js"></script>
 </body>
