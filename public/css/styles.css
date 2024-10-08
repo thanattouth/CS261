@@ -1,15 +1,18 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
 }
 
 .login-container {
-    width: 300px;
-    margin: 100px auto;
+    max-width: 400px; /* Set a max width */
+    width: 90%; /* Allow it to take 90% of the viewport width */
+    margin: 100px auto; /* Center the container */
     padding: 20px;
     background-color: #fff;
-    border-radius: 8px; /* Slightly larger border-radius for a smoother look */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -22,28 +25,40 @@ label {
     margin: 10px 0 5px;
 }
 
-input, select {
+select {
     width: 100%;
-    padding: 10px; /* Increased padding for better touch targets */
+    padding: 12px; /* Increased padding for height */
     margin-bottom: 10px;
-    border: 2px solid #007bff; /* Border color */
-    border-radius: 5px; /* Rounded corners */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px; /* Increased font size for better visibility */
+    height: auto; /* Ensure the height adjusts based on padding */
 }
 
-/* Focus effect for inputs */
+input {
+    width: calc(100% - 23px); /* Match width of input and select */
+    padding: 10px; /* Ensure consistent padding */
+    margin-bottom: 10px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 input:focus, select:focus {
-    border-color: #0056b3; /* Darker blue on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Outer glow effect */
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .toggle-password {
     cursor: pointer;
     color: #007bff;
     font-size: 14px;
-    margin-top: -5px; /* Slightly adjust position */
+    margin-top: -5px;
 }
+
 .toggle-password:hover {
     text-decoration: underline;
 }
@@ -53,7 +68,7 @@ button {
     padding: 10px;
     background-color: #007bff;
     border: none;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -71,4 +86,12 @@ button:hover:not(:disabled) {
 #message {
     margin-top: 20px;
     text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 500px) {
+    .login-container {
+        margin: 20px; /* Reduce margin for smaller screens */
+        padding: 15px; /* Slightly smaller padding */
+    }
 }
