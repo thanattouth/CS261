@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
     checkInputs();
 });
 
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleText = document.getElementById('togglePassword');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleText.innerText = 'Hide Password';
+    } else {
+        passwordInput.type = 'password';
+        toggleText.innerText = 'Show Password';
+    }
+}
+
 function call_REST_API_Hello() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;

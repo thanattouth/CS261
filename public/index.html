@@ -14,6 +14,9 @@
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <div style="position: relative;">
+                <span class="toggle-password" id="togglePassword" onclick="togglePassword()">Show Password</span>
+            </div>
             <label for="role">role</label>
             <select name="role" id="role" required>
                 <option value="" disabled selected>Select a role</option>
@@ -21,7 +24,7 @@
                 <option value="teacher">Teacher</option>
             </select>
             <button type="button" onclick="submitLogin()" id="loginButton" disabled>Login</button>
-            <button type="button" onclick="call_REST_API_Hello()">Hello</button>
+            <!-- <button type="button" onclick="call_REST_API_Hello()">Hello</button> -->
         </form>
         <p id="message"></p>
     </div>
