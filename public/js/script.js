@@ -22,7 +22,12 @@ function submitLogin() {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('message').innerText = data.message;
+        if (data.status) {
+            showAccountInfo(data);
+            document.getElementById('message').innerText = data.message;
+        } else {
+            document.getElementById('message').innerText = data.message;
+        }
     })
     .catch(error => {
         console.error('Error:', error);
@@ -86,4 +91,21 @@ function togglePassword() {
         passwordInput.type = 'password';
         toggleText.innerText = 'Show Password';
     }
+}
+
+function showAccountInfo(data) {
+    const accountInfoContainer = document.getElementById('accountInfo');
+
+    accountInfoContainer.innerHTML = `
+        <h2>Account Information</h2>
+        <p><strong>Username:</strong> ${data.username}</p>
+        <p><strong>Display Name (TH):</strong> ${data.displayname_th}</p>
+        <p><strong>Display Name (EN):</strong> ${data.displayname_en}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Department:</strong> ${data.department}</p>
+        <p><strong>Faculty:</strong> ${data.faculty}</p>
+        <p><strong>Current Status:</strong> ${data.tu_status}</p>
+    `;
+
+    accountInfoContainer.style.display = 'block';
 }
