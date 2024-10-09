@@ -5,6 +5,20 @@ body {
     padding: 0;
 }
 
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 70%;
+    max-width: 1200px;
+    margin: 50px auto;
+}
+
+.shift-left {
+    /* margin-right: 20px; */
+    transform: translateX(-20px);
+}
+
 .login-container {
     max-width: 400px;
     width: 90%;
@@ -15,6 +29,7 @@ body {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
     border: 1px solid #dcdcdc; /* Light border for subtle definition */
     position: relative; /* Needed for absolute positioning of buttons */
+    transition: transform 0.4s ease;
 }
 
 /* MacBook-style buttons */
@@ -122,6 +137,26 @@ button:hover:not(:disabled) {
     color: green; /* Success messages in green */
     margin-top: 20px;
     text-align: center;
+}
+
+.account-info {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px; 
+    background-color: #ffffff; 
+    border-radius: 20px; 
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); 
+    border: 1px solid #dcdcdc; 
+    opacity: 0; 
+    transform: translateX(20px); 
+    transition: opacity 0.4s ease, transform 0.6s ease; 
+    display: none; 
+}
+
+.account-info.visible {
+    opacity: 1; 
+    transform: translateX(0); 
+    display: block; 
 }
 
 /* Media Queries for Responsiveness */

@@ -23,6 +23,8 @@ function submitLogin() {
     .then(response => response.json())
     .then(data => {
         if (data.status) {
+            const loginContainer = document.getElementById('loginSection');
+            loginContainer.classList.add('shift-left');
             showAccountInfo(data);
             document.getElementById('message').innerText = data.message;
         } else {
@@ -95,8 +97,14 @@ function togglePassword() {
 
 function showAccountInfo(data) {
     const accountInfoContainer = document.getElementById('accountInfo');
-
+    
+    // Set the content for the account info
     accountInfoContainer.innerHTML = `
+        <div class="mac-buttons">
+            <div class="button close"></div>
+            <div class="button minimize"></div>
+            <div class="button maximize"></div>
+        </div>
         <h2>Account Information</h2>
         <p><strong>Username:</strong> ${data.username}</p>
         <p><strong>Display Name (TH):</strong> ${data.displayname_th}</p>
@@ -107,5 +115,8 @@ function showAccountInfo(data) {
         <p><strong>Current Status:</strong> ${data.tu_status}</p>
     `;
 
-    accountInfoContainer.style.display = 'block';
+    accountInfoContainer.style.display = 'block'; // Show the element
+    setTimeout(() => {
+        accountInfoContainer.classList.add('visible'); // Add class to trigger transition
+    }, 0);
 }
