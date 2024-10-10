@@ -97,8 +97,8 @@ function togglePassword() {
 
 function showAccountInfo(data) {
     const accountInfoContainer = document.getElementById('accountInfo');
-    
-    // Set the content for the account info
+
+    // Populate the account info content
     accountInfoContainer.innerHTML = `
         <div class="mac-buttons">
             <div class="button close"></div>
@@ -115,8 +115,21 @@ function showAccountInfo(data) {
         <p><strong>Current Status:</strong> ${data.tu_status}</p>
     `;
 
-    accountInfoContainer.style.display = 'block'; // Show the element
+    // Show the account info container
+    accountInfoContainer.style.display = 'block';
+
+    // Trigger the smooth transition
     setTimeout(() => {
-        accountInfoContainer.classList.add('visible'); // Add class to trigger transition
-    }, 0);
+        accountInfoContainer.classList.add('visible');
+    }, 50);  // Delay to ensure DOM update
+}
+
+function hideAccountInfo() {
+    const accountInfoContainer = document.getElementById('accountInfo');
+
+    // Hide with a smooth transition
+    accountInfoContainer.classList.remove('visible');
+    setTimeout(() => {
+        accountInfoContainer.style.display = 'none'; // Completely hide after the transition
+    }, 1000);  // Delay matches the transition duration
 }
