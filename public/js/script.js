@@ -133,3 +133,21 @@ function hideAccountInfo() {
         accountInfoContainer.style.display = 'none'; // Completely hide after the transition
     }, 1000);  // Delay matches the transition duration
 }
+
+// function call_REST_API_Hello() {
+//     const username = document.getElementById('username').value;
+//     const password = document.getElementById('password').value;
+
+//     const url = (
+//         'http://localhost:8080/testmicroservice1/hello?' +
+//         new URLSearchParams({myName: username, lastName: password}).toString()
+//     );
+
+//     fetch(url)
+//        .then(response => response.text())
+//        .then(text => {
+//             console.log("text return from REST API: "+text);
+//             document.getElementById('message').innerText = text;
+//        })
+//        .catch(error => console.error('Error:', error));
+// }
