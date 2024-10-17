@@ -1,6 +1,7 @@
 function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value; // Get the selected role
 
     // First, validate inputs
     if (!validateInputs(username, password)) {
@@ -23,10 +24,18 @@ function submitLogin() {
     .then(response => response.json())
     .then(data => {
         if (data.status) {
-            const loginContainer = document.getElementById('loginSection');
-            loginContainer.classList.add('shift-left');
-            showAccountInfo(data);
-            document.getElementById('message').innerText = data.message;
+            // Check if the selected role matches the data type
+            if ((role === 'student' && data.type === 'student') || 
+                (role === 'employee' && data.type === 'employee')) {
+
+                const loginContainer = document.getElementById('loginSection');
+                loginContainer.classList.add('shift-left');
+                showAccountInfo(data);
+                document.getElementById('message').innerText = data.message;
+            } else {
+                // If role doesn't match
+                document.getElementById('message').innerText = 'Selected role does not match account type.';
+            }
         } else {
             document.getElementById('message').innerText = data.message;
         }
@@ -36,7 +45,6 @@ function submitLogin() {
         document.getElementById('message').innerText = 'An error occurred while processing your request.';
     });
 }
-
 
 function validateInputs(username, password) {
     const usernameRegex = /^[0-9]{10}$/;
