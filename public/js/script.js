@@ -26,7 +26,7 @@ function submitLogin() {
         if (data.status) {
             // Check if the selected role matches the data type
             if ((role === 'student' && data.type === 'student') || 
-                (role === 'employee' && data.type === 'employee')) {
+                (role === 'lecturer' && data.type === 'employee')) {
 
                 const loginContainer = document.getElementById('loginSection');
                 loginContainer.classList.add('shift-left');
