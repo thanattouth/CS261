@@ -1,48 +1,39 @@
 function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value; // Get the selected role
-
-    // First, validate inputs
     if (!validateInputs(username, password)) {
-        document.getElementById('message').innerText = ''; // Clear success message if validation fails
-        return; // Stop the function if validation fails
+        document.getElementById('message').innerText = '';
+        return;
     }
-
-    // Proceed to make the API call if inputs are valid
-    fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
+    fetch('/api/login', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Application-Key': 'TU2ecedd420922b9c533378fbfd1a1135f335e072a347689002caa1a73ac6c0c4a98954a78a147ea2b7ae10bdefe2fb198'
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-            "UserName": username, 
-            "PassWord": password 
+        body: JSON.stringify({
+            "UserName": username,
+            "PassWord": password
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
     .then(data => {
-        if (data.status) {
-            // Check if the selected role matches the data type
-            if ((role === 'student' && data.type === 'student') || 
-                (role === 'lecturer' && data.type === 'employee')) {
-
-                const loginContainer = document.getElementById('loginSection');
-                loginContainer.classList.add('shift-left');
-                showAccountInfo(data);
-                document.getElementById('message').innerText = data.message;
-            } else {
-                // If role doesn't match
-                document.getElementById('message').innerText = 'Selected role does not match account type.';
-            }
+        if (data.success) {
+            const loginContainer = document.getElementById('loginSection');
+            loginContainer.classList.add('shift-left');
+            showAccountInfo(data.userData);
+            document.getElementById('message').innerText = data.message;
         } else {
             document.getElementById('message').innerText = data.message;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('message').innerText = 'An error occurred while processing your request.';
+        document.getElementById('message').innerText = `An error occurred: ${error.message || error.error || 'Unknown error'}`;
     });
 }
 
