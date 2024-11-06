@@ -1,39 +1,67 @@
 function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value; // Get the selected role
+
+    // Validate inputs
     if (!validateInputs(username, password)) {
-        document.getElementById('message').innerText = '';
-        return;
+        document.getElementById('message').innerText = ''; // Clear success message if validation fails
+        return; // Stop the function if validation fails
     }
-    fetch('/api/login', {
+
+    // Make the API call to the TU API
+    fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Application-Key': 'TU2ecedd420922b9c533378fbfd1a1135f335e072a347689002caa1a73ac6c0c4a98954a78a147ea2b7ae10bdefe2fb198'
         },
         body: JSON.stringify({
             "UserName": username,
             "PassWord": password
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw err; });
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            const loginContainer = document.getElementById('loginSection');
-            loginContainer.classList.add('shift-left');
-            showAccountInfo(data.userData);
-            document.getElementById('message').innerText = data.message;
+        if (data.status) {
+            if ((role === 'student' && data.type === 'student') ||
+                (role === 'employee' && data.type === 'employee')) {
+                    const loginContainer = document.getElementById('loginSection');
+                    loginContainer.classList.add('shift-left');
+                    showAccountInfo(data);
+                    document.getElementById('message').innerText = 'Login successful';
+                // Create a student object from the TU API response
+                const student = {
+                    userName: data.username,
+                    type: data.type,
+                    engName: data.displayname_en,
+                    email: data.email,
+                    faculty: data.faculty
+                };
+
+                // Save the student to the database
+                fetch('http://localhost:8080/api/student', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(student)
+                })
+                .catch(error => {
+                    console.error('Error saving student:', error);
+                    document.getElementById('message').innerText = 'An error occurred while saving the student data.';
+                });
+            } else {
+                // If role doesn't match
+                document.getElementById('message').innerText = 'Selected role does not match account type.';
+            }
         } else {
             document.getElementById('message').innerText = data.message;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('message').innerText = `An error occurred: ${error.message || error.error || 'Unknown error'}`;
+        document.getElementById('message').innerText = 'An error occurred while processing your request.';
     });
 }
 
