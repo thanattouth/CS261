@@ -1,12 +1,13 @@
 function submitLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value; // Get the selected role
+    const role = document.getElementById('role').value;
 
     // Validate inputs
     if (!validateInputs(username, password)) {
-        document.getElementById('message').innerText = ''; // Clear success message if validation fails
-        return; // Stop the function if validation fails
+        alert('Please check your username and password!');
+        document.getElementById('message').innerText = '';
+        return;
     }
 
     // Make the API call to the TU API
@@ -26,11 +27,7 @@ function submitLogin() {
         if (data.status) {
             if ((role === 'student' && data.type === 'student') ||
                 (role === 'employee' && data.type === 'employee')) {
-                    const loginContainer = document.getElementById('loginSection');
-                    loginContainer.classList.add('shift-left');
-                    showAccountInfo(data);
-                    document.getElementById('message').innerText = 'Login successful';
-                // Create a student object from the TU API response
+                
                 const student = {
                     userName: data.username,
                     type: data.type,
@@ -47,23 +44,69 @@ function submitLogin() {
                     },
                     body: JSON.stringify(student)
                 })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.error || 'Failed to save student');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(savedStudent => {
+                    // Show success message and display data
+                    document.getElementById('message').innerHTML = `
+                        <div class="success-data">
+                            <h3>Login Successful!</h3>
+                            <p><strong>Username:</strong> ${savedStudent.userName}</p>
+                            <p><strong>Name:</strong> ${savedStudent.engName}</p>
+                            <p><strong>Email:</strong> ${savedStudent.email}</p>
+                            <p><strong>Faculty:</strong> ${savedStudent.faculty}</p>
+                            <p><strong>Type:</strong> ${savedStudent.type}</p>
+                        </div>
+                    `;
+                    alert('Login successful!');
+                })
                 .catch(error => {
                     console.error('Error saving student:', error);
-                    document.getElementById('message').innerText = 'An error occurred while saving the student data.';
+                    alert(error.message || 'Failed to save user data to database. Please try again.');
+                    document.getElementById('message').innerText = '';
                 });
             } else {
                 // If role doesn't match
-                document.getElementById('message').innerText = 'Selected role does not match account type.';
+                alert('Selected role does not match account type.');
+                document.getElementById('message').innerText = '';
             }
         } else {
-            document.getElementById('message').innerText = data.message;
+            // If TU API login fails
+            alert(`Login failed: ${data.message}`);
+            document.getElementById('message').innerText = '';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('message').innerText = 'An error occurred while processing your request.';
+        alert('An error occurred while processing your request. Please try again.');
+        document.getElementById('message').innerText = '';
     });
 }
+
+const style = document.createElement('style');
+style.textContent = `
+    .success-data {
+        background-color: #f0f8ff;
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid #4CAF50;
+        margin: 10px 0;
+    }
+    .success-data h3 {
+        color: #4CAF50;
+        margin-top: 0;
+    }
+    .success-data p {
+        margin: 5px 0;
+    }
+`;
+document.head.appendChild(style);
 
 function validateInputs(username, password) {
     const usernameRegex = /^[0-9]{10}$/;
